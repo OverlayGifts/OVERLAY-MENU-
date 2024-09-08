@@ -1,43 +1,46 @@
 <html>
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
     <style>
-      body, html {
+      body {
         margin: 0;
         overflow: hidden;
-        height: 100%;
-      }
-      
-      a-scene {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
       }
     </style>
   </head>
 
   <body>
-    <!-- AR Scene -->
+    <!-- Scene with AR.js to trigger the camera -->
     <a-scene
       embedded
-      arjs="sourceType: webcam; debugUIEnabled: false;">
+      arjs="sourceType: webcam;"
+      vr-mode-ui="enabled: false"
+      renderer="antialias: true; alpha: true; precision: medium;"
+      device-orientation-permission-ui="enabled: false">
       
-      <!-- 3D Box that will appear on click -->
-      <a-box position="0 0 -3" rotation="0 45 0" color="#4CC3D9" shadow visible="false" id="box"></a-box> <!-- Position box further back -->
+      <!-- Camera with adjusted field of view (FOV) to reduce zoom -->
+      <a-camera position="0 0 0" camera="fov: 70"></a-camera>
 
-      <!-- Camera -->
-      <a-camera position="0 0 0" wasd-controls-enabled="false"></a-camera> <!-- Camera at the default position -->
+      <!-- Hidden 3D box initially -->
+      <a-box
+        id="box"
+        position="0 0 -3"
+        rotation="0 45 0"
+        color="blue"
+        visible="false">
+      </a-box>
     </a-scene>
 
     <script>
-      // Add click listener to show the box when the screen is clicked
-      document.querySelector('a-scene').addEventListener('click', function () {
-        const box = document.querySelector('#box');
-        box.setAttribute('visible', 'true');  // Show the box when clicked
+      // Wait for the scene to load
+      document.querySelector('a-scene').addEventListener('loaded', () => {
+        // Add a click listener on the whole scene
+        document.querySelector('a-scene').addEventListener('click', () => {
+          const box = document.querySelector('#box');
+          // Make the box visible when the screen is clicked/tapped
+          box.setAttribute('visible', 'true');
+        });
       });
     </script>
   </body>
