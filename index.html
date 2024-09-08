@@ -26,11 +26,11 @@
       embedded
       arjs="sourceType: webcam; debugUIEnabled: false;">
       
-      <!-- Initially hidden 3D Box that will appear on click -->
-      <a-box position="0 0 -1" rotation="0 45 0" color="#4CC3D9" shadow visible="false" id="box"></a-box>
-      
+      <!-- 3D Box that will appear on click -->
+      <a-box position="0 0 -3" rotation="0 45 0" color="#4CC3D9" shadow visible="false" id="box"></a-box> <!-- Position box further back -->
+
       <!-- Camera -->
-      <a-camera></a-camera>
+      <a-camera position="0 0 0" wasd-controls-enabled="false"></a-camera> <!-- Camera at the default position -->
     </a-scene>
 
     <script>
