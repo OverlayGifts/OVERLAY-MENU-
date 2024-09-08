@@ -1,5 +1,11 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AR Markerless Hotel Menu</title>
+
+    <!-- A-Frame and AR.js Library -->
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
     <style>
@@ -7,40 +13,85 @@
         margin: 0;
         overflow: hidden;
       }
+      #menu-info {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 10px;
+        border-radius: 10px;
+        display: none;
+      }
     </style>
   </head>
 
   <body>
-    <!-- Scene with AR.js to trigger the camera -->
+    <!-- AR.js scene setup for markerless tracking -->
     <a-scene
       embedded
-      arjs="sourceType: webcam;"
-      vr-mode-ui="enabled: false"
+      arjs="sourceType: webcam; debugUIEnabled: false;"
       renderer="antialias: true; alpha: true; precision: medium;"
-      device-orientation-permission-ui="enabled: false">
-      
-      <!-- Camera with adjusted field of view (FOV) to reduce zoom -->
-      <a-camera position="0 0 0" camera="fov: 70"></a-camera>
+      vr-mode-ui="enabled: false"
+      device-orientation-permission-ui="enabled: false"
+    >
+      <!-- Set up camera -->
+      <a-camera position="0 0 0"></a-camera>
 
-      <!-- Hidden 3D box initially -->
-      <a-box
-        id="box"
-        position="0 0 0"
-        rotation="0 45 0"
-        color="gold"
-        visible="false">
-      </a-box>
+      <!-- Dishes (Placeholder Models) -->
+      <a-entity id="menu" position="0 0 0">
+        <!-- Each dish will be a clickable box (you can replace these with 3D models later) -->
+        <a-box id="dish1" color="tomato" position="-1 0 -3" depth="0.5" width="0.5" height="0.5" class="dish"></a-box>
+        <a-box id="dish2" color="gold" position="0 0 -3" depth="0.5" width="0.5" height="0.5" class="dish"></a-box>
+        <a-box id="dish3" color="green" position="1 0 -3" depth="0.5" width="0.5" height="0.5" class="dish"></a-box>
+        <a-box id="dish4" color="purple" position="-1 -1 -3" depth="0.5" width="0.5" height="0.5" class="dish"></a-box>
+        <a-box id="dish5" color="orange" position="0 -1 -3" depth="0.5" width="0.5" height="0.5" class="dish"></a-box>
+        <a-box id="dish6" color="cyan" position="1 -1 -3" depth="0.5" width="0.5" height="0.5" class="dish"></a-box>
+        <a-box id="dish7" color="red" position="-1 -2 -3" depth="0.5" width="0.5" height="0.5" class="dish"></a-box>
+        <a-box id="dish8" color="yellow" position="0 -2 -3" depth="0.5" width="0.5" height="0.5" class="dish"></a-box>
+        <a-box id="dish9" color="blue" position="1 -2 -3" depth="0.5" width="0.5" height="0.5" class="dish"></a-box>
+        <a-box id="dish10" color="pink" position="0 -3 -3" depth="0.5" width="0.5" height="0.5" class="dish"></a-box>
+      </a-entity>
     </a-scene>
 
+    <!-- Info box to display dish details -->
+    <div id="menu-info"></div>
+
+    <!-- JavaScript to control interactions -->
     <script>
-      // Wait for the scene to load
-      document.querySelector('a-scene').addEventListener('loaded', () => {
-        // Add a click listener on the whole scene
-        document.querySelector('a-scene').addEventListener('click', () => {
-          const box = document.querySelector('#box');
-          // Make the box visible when the screen is clicked/tapped
-          box.setAttribute('visible', 'true');
+      const dishes = {
+        dish1: { name: "Spaghetti", price: "$12", description: "Classic Italian pasta" },
+        dish2: { name: "Burger", price: "$10", description: "Juicy beef burger with fries" },
+        dish3: { name: "Salad", price: "$8", description: "Fresh garden salad" },
+        dish4: { name: "Pizza", price: "$15", description: "Cheese pizza with pepperoni" },
+        dish5: { name: "Sushi", price: "$18", description: "Assorted sushi platter" },
+        dish6: { name: "Tacos", price: "$10", description: "Beef tacos with salsa" },
+        dish7: { name: "Steak", price: "$20", description: "Grilled steak with vegetables" },
+        dish8: { name: "Pancakes", price: "$7", description: "Fluffy pancakes with syrup" },
+        dish9: { name: "Ice Cream", price: "$5", description: "Vanilla ice cream with toppings" },
+        dish10: { name: "Coffee", price: "$3", description: "Freshly brewed coffee" },
+      };
+
+      // Function to show dish info
+      const showDishInfo = (id) => {
+        const dish = dishes[id];
+        const infoBox = document.getElementById("menu-info");
+        infoBox.innerHTML = `<h3>${dish.name}</h3><p>${dish.description}</p><p><strong>Price: ${dish.price}</strong></p>`;
+        infoBox.style.display = "block";
+      };
+
+      // Event listeners for each dish
+      document.querySelectorAll(".dish").forEach((element) => {
+        element.addEventListener("click", (event) => {
+          const dishId = event.target.id;
+          showDishInfo(dishId);
         });
+      });
+
+      // Hide the menu info when the screen is tapped elsewhere
+      document.querySelector("a-scene").addEventListener("click", () => {
+        document.getElementById("menu-info").style.display = "none";
       });
     </script>
   </body>
