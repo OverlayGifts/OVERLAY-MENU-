@@ -37,21 +37,12 @@
       device-orientation-permission-ui="enabled: false"
     >
       <!-- Set up camera with a wider field of view -->
-      <a-camera position="0 0 0" camera="fov: 70"></a-camera> <!-- Increase FOV to make the camera less zoomed -->
+      <a-camera position="0 0 0" camera="fov: 60"></a-camera> <!-- Camera FOV is set to 60 for a more natural view -->
 
       <!-- Dishes (Placeholder Models) -->
-      <a-entity id="menu" position="0 0 -5"> <!-- Move the menu further away by setting Z position to -5 -->
-        <!-- Each dish will be a clickable box (you can replace these with 3D models later) -->
-        <a-box id="dish1" color="tomato" position="-1 0 0" depth="0.5" width="0.5" height="0.5" class="dish"></a-box>
-        <a-box id="dish2" color="gold" position="0 0 0" depth="0.5" width="0.5" height="0.5" class="dish"></a-box>
-        <a-box id="dish3" color="green" position="1 0 0" depth="0.5" width="0.5" height="0.5" class="dish"></a-box>
-        <a-box id="dish4" color="purple" position="-1 -1 0" depth="0.5" width="0.5" height="0.5" class="dish"></a-box>
-        <a-box id="dish5" color="orange" position="0 -1 0" depth="0.5" width="0.5" height="0.5" class="dish"></a-box>
-        <a-box id="dish6" color="cyan" position="1 -1 0" depth="0.5" width="0.5" height="0.5" class="dish"></a-box>
-        <a-box id="dish7" color="red" position="-1 -2 0" depth="0.5" width="0.5" height="0.5" class="dish"></a-box>
-        <a-box id="dish8" color="yellow" position="0 -2 0" depth="0.5" width="0.5" height="0.5" class="dish"></a-box>
-        <a-box id="dish9" color="blue" position="1 -2 0" depth="0.5" width="0.5" height="0.5" class="dish"></a-box>
-        <a-box id="dish10" color="pink" position="0 -3 0" depth="0.5" width="0.5" height="0.5" class="dish"></a-box>
+      <a-entity id="menu" position="0 0 -10"> <!-- Menu moved further away with Z-position set to -10 -->
+        <!-- Plane for the menu -->
+        <a-plane id="menu-plane" position="0 0 0" width="5" height="3" color="#FFD700"></a-plane>
       </a-entity>
     </a-scene>
 
